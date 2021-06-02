@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ViewController;
-use App\Http\Controllers\Auth\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,5 +19,3 @@ use App\Http\Controllers\Auth\AuthController;
 //});
 
 Route::any('/{any}', [ViewController::class, 'app'])->where('any','^(?!api).*$');
-
-Route::post('/register',[AuthController::class, 'process_signup']);
