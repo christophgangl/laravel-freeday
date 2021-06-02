@@ -11,6 +11,8 @@ class RegisterController extends Controller
 
     public function register(Request $request){
 
+        // test branch
+
 //        $params = $request->all()['data'];
 //        $params = (object)$params;
 //
