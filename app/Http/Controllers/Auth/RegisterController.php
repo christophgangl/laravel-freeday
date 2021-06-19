@@ -5,13 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
-
     public function register(Request $request){
-
-        // test branch
 
 //        $params = $request->all()['data'];
 //        $params = (object)$params;
@@ -32,15 +30,18 @@ class RegisterController extends Controller
 
         $request->validate([
             'name' => ['required'],
-            'eamil' => ['required', 'email', 'unique:users'],
-            'password' => ['required', 'min:4', 'confirmed']
+            'email' => ['required', 'email', 'unique:users'],
+            'password' => ['required', 'min:4', 'same:password_confirmation']
         ]);
+
+
 
         User::create([
             'name' => $request->name,
-            'eamil' => $request->email,
+            'email' => $request->email,
             'password' => $request->password,
         ]);
 
+        return response()->json(['msg' => 'successfully registred']);
     }
 }

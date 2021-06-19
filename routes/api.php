@@ -1,6 +1,8 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Services\ServicesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,9 +17,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/register',[AuthController::class, 'process_signup']);
+Route::post('/register',[RegisterController::class, 'register']);
+Route::post('/login',[LoginController::class, 'login']);
+Route::post('/logout',[LoginController::class, 'logout'])->middleware('auth:sanctum');
+//Route::post('/logout',[LoginController::class, 'logout']);
 
+Route::get('/services/index',[ServicesController::class, 'index']);
+Route::post('/services/store',[ServicesController::class, 'store']);
