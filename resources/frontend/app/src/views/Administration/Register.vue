@@ -3,8 +3,8 @@
         <div class="row align-items-center justify-content-center fill">
             <div class="col"></div>
             <div class="col-6">
-                <form>
-                    <!--            <form action="#" @submit.prevent="register()">-->
+<!--                <form>-->
+                <form action="#" @submit.prevent="doRegister()">
 
                     <h1 class="h3 mb-3 fw-normal">Please register</h1>
 
@@ -21,7 +21,7 @@
                         <label for="InputPassword">Password</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input v-model="form.passwordConfirmation" type="password" class="form-control" id="InputPasswordConfirmation" placeholder="Password Confirmation">
+                        <input v-model="form.password_confirmation" type="password" class="form-control" id="InputPasswordConfirmation" placeholder="Password Confirmation">
                         <label for="InputPasswordConfirmation">Password Confirmation</label>
                     </div>
 
@@ -35,7 +35,23 @@
 </template>
 
 <script>
-import {Vue} from "vue-class-component";
+import {Options, Vue} from "vue-class-component";
+import Api from "@/common/Api";
+
+@Options({
+    components: {
+    },
+    methods: {
+        doRegister() {
+            Api.post('register', this.form).then(() => {
+                console.info('register');
+            }).catch((error) => {
+                console.info('error');
+                this.errors = error.response.data.errors;
+            })
+        }
+    }
+})
 
 export default class Register extends Vue{
     data() {
@@ -44,8 +60,9 @@ export default class Register extends Vue{
                 name: '',
                 email: '',
                 password: '',
-                passwordConfirmation: '',
-            }
+                password_confirmation: '',
+            },
+            errors: []
         }
     }
 }

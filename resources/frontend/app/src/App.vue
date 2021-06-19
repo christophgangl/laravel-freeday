@@ -32,19 +32,29 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">
-                                <router-link to="/about">About</router-link>
+                                <router-link :to="{ name: 'dashboard'}">Dashboard</router-link>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <router-link :to="{ name: 'about'}">About</router-link>
                             </a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ">
-                        <li class="nav-item">
+                        <li class="nav-item" v-if="!loggedIn()">
                             <a class="nav-link" href="#">
-                                <router-link to="/login">Login</router-link>
+                                <router-link :to="{ name: 'login'}">Login</router-link>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <router-link to="/register">Register</router-link>
+                            <a class="nav-link" v-if="!loggedIn()">
+                                <router-link :to="{ name: 'register'}">Register</router-link>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" @click="logout()" v-if="loggedIn()">
+                                Logout
                             </a>
                         </li>
                     </ul>
@@ -54,6 +64,43 @@
     </div>
     <router-view/>
 </template>
+
+<script>
+import { Options, Vue } from 'vue-class-component';
+import Api from "@/common/Api";
+
+
+
+@Options({
+    components: {
+    },
+    methods: {
+        loggedIn(){
+            return this.token;
+        },
+        logout(){
+            console.info(this.user);
+
+            Api.post('logout', {},{headers: { 'Authorization' : 'Bearer '+ this.token}}).then((res) => {
+                console.info('logout');
+                localStorage.removeItem('token');
+                this.$router.push({name: 'home'});
+            }).catch(() => {
+                console.info('error');
+            })
+        }
+    }
+})
+
+export default class App extends Vue{
+    data() {
+        return {
+            token: localStorage.getItem('token')
+        }
+    }
+}
+
+</script>
 
 <style>
     #app {

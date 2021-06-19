@@ -30,12 +30,21 @@ export default class Api {
         return 'http://freeday.local/api/';
     }
 
-    public static get(endpoint: string, params?: object) {
+    public static post(endpoint: string, params?: object, config?: object) {
 
         const axiosNew = axios.create({
             baseURL: this.getBaseUrl()
         })
 
-        return axiosNew.post(endpoint, params)
+        return axiosNew.post(endpoint, params, config)
+    }
+
+    public static get(endpoint: string, config?: object) {
+
+        const axiosNew = axios.create({
+            baseURL: this.getBaseUrl()
+        })
+
+        return axiosNew.get(endpoint, config)
     }
 }
