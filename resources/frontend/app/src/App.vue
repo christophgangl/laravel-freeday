@@ -5,11 +5,6 @@
 <!--    </div>-->
 <!--    <router-view/>-->
 
-<!--    BOOTSTRAP THEME START -->
-
-<!--    Change in main Branch-->
-
-
     <div class="container-fluid px-0">
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
