@@ -1,8 +1,10 @@
 {
   "compilerOptions": {
+//    "noImplicitAny": false,
     "target": "esnext",
     "module": "esnext",
     "strict": true,
+//    "strictPropertyInitialization": false,
     "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",
@@ -15,6 +17,9 @@
     "types": [
       "webpack-env"
     ],
+//    "types": [
+//      "node"
+//    ],
     "paths": {
       "@/*": [
         "src/*"
