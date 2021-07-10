@@ -216,18 +216,27 @@
 <script>
 import { Options, Vue } from 'vue-class-component';
 import Api from "@/common/Api";
+import {mapState} from "vuex";
 
 
 
 @Options({
     components: {
     },
+    computed: {
+        ...mapState('authentication', ['user'])
+    },
     methods: {
         loggedIn(){
-            return this.token;
-        },
-        logout(){
             console.info(this.user);
+            console.info(Object.keys(this.user).length);
+            return Object.keys(this.user).length > 0;
+        },
+        // loggedIn(){
+        //     return this.token;
+        // },
+        logout(){
+            // console.info(this.user);
 
             Api.post('logout', {},{headers: { 'Authorization' : 'Bearer '+ this.token}}).then((res) => {
                 console.info('logout');
@@ -243,14 +252,14 @@ import Api from "@/common/Api";
 export default class App extends Vue{
     data() {
         return {
-            user: null,
+            // user: null,
             token: localStorage.getItem('token')
         }
     }
 
     mounted() {
         Api.get('user', {headers: { 'Authorization' : 'Bearer '+ this.token}}).then((res) => {
-            this.user = res.data;
+            // this.user = res.data;
         }).catch((errors) => {
             console.info(errors);
         })

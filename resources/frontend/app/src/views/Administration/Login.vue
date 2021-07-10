@@ -3,7 +3,7 @@
         <div class="row align-items-center justify-content-center fill">
             <div class="col"></div>
             <div class="col-6">
-                <form action="#" @submit.prevent="doLogin()">
+                <form action="#" @submit.prevent="login()">
                     <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
                     <div class="form-floating mb-3">
@@ -34,22 +34,29 @@
 
 <script>
 import {Options, Vue} from "vue-class-component";
-import Api from "@/common/Api";
+import {mapActions} from "vuex";
+// import Api from "@/common/Api";
 
 @Options({
     components: {
     },
     methods: {
-        doLogin() {
-            Api.post('login', this.form).then((res) => {
-                console.info('login', this.form);
-                localStorage.setItem('token', res.data)
-                this.$router.push({name: 'dashboard'});
-            }).catch((error) => {
-                console.info('error');
-                this.errors = error.response.data.errors;
-            })
-        }
+        // doLogin() {
+        //     Api.post('login', this.form).then((res) => {
+        //         console.info('login', this.form);
+        //         localStorage.setItem('token', res.data)
+        //         this.$router.push({name: 'dashboard'});
+        //     }).catch((error) => {
+        //         console.info('error');
+        //         this.errors = error.response.data.errors;
+        //     })
+        // }
+
+        // login() {
+        //     this.$store.dispatch('authUser/loginUser', this.form);
+        // },
+
+        ...mapActions('authentication', ['loginUser'])
     }
 })
 
@@ -63,6 +70,11 @@ export default class Login extends Vue{
             },
             errors: {}
         }
+    }
+
+    login() {
+        console.info('login', this.form);
+        this.loginUser(this.form);
     }
 }
 </script>
